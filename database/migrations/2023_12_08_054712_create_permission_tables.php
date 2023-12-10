@@ -35,6 +35,7 @@ return new class extends Migration
         });
 
         Schema::create($tableNames['roles'], function (Blueprint $table) use ($teams, $columnNames) {
+            $table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
             $table->bigIncrements('id'); // role id
             if ($teams || config('permission.testing')) { // permission.testing is a fix for sqlite testing
                 $table->unsignedBigInteger($columnNames['team_foreign_key'])->nullable();
@@ -51,6 +52,7 @@ return new class extends Migration
         });
 
         Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames, $pivotPermission, $teams) {
+            $table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
             $table->unsignedBigInteger($pivotPermission);
 
             $table->string('model_type');
@@ -75,6 +77,7 @@ return new class extends Migration
         });
 
         Schema::create($tableNames['model_has_roles'], function (Blueprint $table) use ($tableNames, $columnNames, $pivotRole, $teams) {
+            $table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
             $table->unsignedBigInteger($pivotRole);
 
             $table->string('model_type');
@@ -98,6 +101,7 @@ return new class extends Migration
         });
 
         Schema::create($tableNames['role_has_permissions'], function (Blueprint $table) use ($tableNames, $pivotRole, $pivotPermission) {
+            $table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
             $table->unsignedBigInteger($pivotPermission);
             $table->unsignedBigInteger($pivotRole);
 
